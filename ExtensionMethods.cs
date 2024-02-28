@@ -12,13 +12,20 @@ namespace Lab14
 {
     public static class ExtensionMethods
     {
-        public static void SortToys(this BinaryTree<Toy> tree, Func<Toy, int> sortByFunc) 
+        public static BinaryTree<Toy> SortToys(this BinaryTree<Toy> tree, Func<Toy, int> sortByFunc)
         {
-            var sortedTrains = tree.OrderBy(sortByFunc);
-            var sortedTrainsArr = sortedTrains.ToArray();
 
-            tree.Clear();
-            tree.AddRange(sortedTrainsArr);
+            var comparer = Comparer<Toy>.Create((toy1, toy2) => sortByFunc(toy1).CompareTo(sortByFunc(toy2)));
+
+            var newTree = new BinaryTree<Toy>(comparer);
+
+            foreach(var toy in tree)
+            {
+                try { newTree.Add(toy); }
+                catch (Exception e) { Console.WriteLine("Не удалось добавить элемент, т.к. он уже есть: " + toy); }
+            }
+            
+            return newTree;
         }
 
         public static IEnumerable<Toy> SelectToys(this BinaryTree<Toy> toys, Func<Toy, bool> selectRule)

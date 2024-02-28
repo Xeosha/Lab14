@@ -184,17 +184,18 @@ namespace Lab14
                 Console.WriteLine("С помощью методов: " + item.Name + " - " + item.Count);
             }
         }
-
+        
+        // Не работает
         static void MethodQuery1(BinaryTree<Toy> toys)
         {
             Console.WriteLine("Сортировка по возрастному ограничению: ");
 
-            toys.SortToys(t => t.AgeRestriction);
+            var newToys = toys.SortToys(t => t.AgeRestriction);
 
-            foreach (var toy in toys)
+            foreach (var toy in newToys)
                 Console.WriteLine(toy.ToString());
 
-            toys.PrintTree();
+            newToys.PrintTree();
             
         }
 
