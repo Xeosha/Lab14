@@ -30,6 +30,8 @@ namespace Lab14
             Query1(queue);
             Query2(queue);
             Query3(queue);
+            Query4(queue);  
+            Query5(queue);
 
 
             Console.ReadKey();
@@ -107,12 +109,59 @@ namespace Lab14
 
         static void Query4(Queue<Dictionary<Goods, Toy>> queue)
         {
-            // объединение 
+            Console.WriteLine("Объединение товаров с возрастным ограничением >10 и <5");
+
+            var toysLinq = (from dict in queue
+                            from toy in dict.Values
+                            where toy.AgeRestriction < 5
+                            select toy).Union
+                            (from dict in queue
+                             from toy in dict.Values
+                             where toy.AgeRestriction > 10
+                             select toy);
+
+
+            Console.WriteLine("С помощью LINQ: ");
+            foreach (var toy in toysLinq)
+                Console.WriteLine(toy.Name + " - " + toy.AgeRestriction);
+
+            var toysOver18 = queue.SelectMany(d => d.Values)
+                                .Where(t => t.AgeRestriction > 10);
+
+            var toysUnder6 = queue.SelectMany(d => d.Values)
+                                  .Where(t => t.AgeRestriction < 5);
+
+            var combinedToys = toysOver18.Union(toysUnder6);
+
+            Console.WriteLine("С помощью методов: ");
+            foreach (var toy in combinedToys)
+                Console.WriteLine(toy.Name + " - " + toy.AgeRestriction);
+
+
         }
 
         static void Query5(Queue<Dictionary<Goods, Toy>> queue)
         {
-            // группировка данных
+            Console.WriteLine("Группировка игрушек по названию");
+
+            var groupByLinq = (from dict in queue
+                               from toy in dict.Values
+                               group toy by toy.Name into g
+                               select new { Name = g.Key, Count = g.Count() }).ToList();
+
+            foreach (var item in groupByLinq)
+            {
+                Console.WriteLine("С помощью LINQ: " + item.Name + " - " + item.Count);
+            }
+
+            var groupByMethod = queue.SelectMany(d => d.Values)
+                                    .GroupBy(t => t.Name)
+                                    .Select(g => new { Name = g.Key, Count = g.Count() }).ToList();
+
+            foreach (var item in groupByMethod)
+            {
+                Console.WriteLine("С помощью методов: " + item.Name + " - " + item.Count);
+            }
         }
 
     }
