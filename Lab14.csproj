@@ -9,6 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Reference Include="BinarySearchTree">
+      <HintPath>..\Lab12\bin\Debug\net7.0\BinarySearchTree.dll</HintPath>
+    </Reference>
     <Reference Include="Lab_10lib">
       <HintPath>..\Lab_10lib\obj\Debug\net7.0\Lab_10lib.dll</HintPath>
     </Reference>

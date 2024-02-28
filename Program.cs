@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
 using Lab_10lib;
+using BinarySearchTree;
 
 namespace Lab14
 {
@@ -33,8 +34,28 @@ namespace Lab14
             Query4(queue);  
             Query5(queue);
 
+            var treeToys = new BinaryTree<Toy>();
+            FillTree(treeToys, dLen);
+
+            MethodQuery1(treeToys);
+            MethodQuery2(treeToys);
+            MethodQuery3(treeToys);
+
+
 
             Console.ReadKey();
+        }
+
+        static void FillTree(BinaryTree<Toy> toys, int size)
+        {
+            var trainArr = new Toy[size];
+
+            for (int i = 0; i < size; i++)
+            {
+                trainArr[i] = new Toy();
+            }
+
+            toys.AddRange(trainArr);
         }
 
         static void FillQueue(Queue<Dictionary<Goods, Toy>> queue, int sizeQueue, int sizeDict)
@@ -162,6 +183,34 @@ namespace Lab14
             {
                 Console.WriteLine("С помощью методов: " + item.Name + " - " + item.Count);
             }
+        }
+
+        static void MethodQuery1(BinaryTree<Toy> toys)
+        {
+            Console.WriteLine("Сортировка по возрастному ограничению: ");
+
+            toys.SortToys(t => t.AgeRestriction);
+
+            foreach (var toy in toys)
+                Console.WriteLine(toy.ToString());
+
+            toys.PrintTree();
+            
+        }
+
+        static void MethodQuery2(BinaryTree<Toy> toys)
+        {
+            Console.WriteLine("Подсчет количества элементов с названием Товар_1: " + toys.CountToys(t => t.Name == "Товар_1").ToString());
+        }
+
+        static void MethodQuery3(BinaryTree<Toy> toys)
+        {
+            Console.WriteLine("Вывести все поезда с 1 в названии: ");
+
+            var zeroToys = toys.SelectToys(t => t.Name.Contains("1"));
+
+            foreach (var toy in zeroToys)
+                Console.WriteLine(toy.ToString());
         }
 
     }
