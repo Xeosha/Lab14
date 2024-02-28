@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <StartupObject>Lab14.Program</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Lab_10lib">
+      <HintPath>..\Lab_10lib\obj\Debug\net7.0\Lab_10lib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
